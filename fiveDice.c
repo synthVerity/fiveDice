@@ -3,6 +3,10 @@
 #include <stdlib.h>
 #include <time.h>
 #include <ctype.h>
+#include <string.h>
+
+// Function definitions
+char *removeNewline(char *s);
 
 // Obvious main is obvious
 int main(void)
@@ -14,7 +18,7 @@ int main(void)
 	int running = 1;
 	int i, j;
 	int dice[5];
-	char input;
+	char input[10], check;
 
 	// Main game(while) loop
 	while(running)
@@ -46,23 +50,23 @@ int main(void)
 		}
 
 		// Ask the player if they want to roll again
-		while(input != 'n' && input != 'y')
+		while(check != 'n' && check != 'y')
 		{
 			printf("\nDo you wish to roll again?[y/N]: ");
-			scanf("%c", &input);
+			fgets(input, sizeof(input), stdin);
 
 			// Parse input to lowercase
-			input = tolower(input);
+			check = tolower(input[0]);
 		}
 
 		// React to player input
-		if(input == 'n')
+		if(check == 'n')
 		{
 			running = 0;
 		}
 		else
 		{
-			input = 0;
+			check = '\0';
 		}
 	}
 
