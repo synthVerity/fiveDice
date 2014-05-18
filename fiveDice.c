@@ -3,10 +3,6 @@
 #include <stdlib.h>
 #include <time.h>
 #include <ctype.h>
-#include <string.h>
-
-// Function definitions
-char *removeNewline(char *s);
 
 // Obvious main is obvious
 int main(void)
