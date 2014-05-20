@@ -10,6 +10,9 @@ int main(void)
 	// Seed the random numbers
 	srand(time(NULL));
 
+	// Scoring card template for players
+	
+
 	// Basic variables for the programs use
 	int running = 1;
 	int i, j;
@@ -69,3 +72,10 @@ int main(void)
 	// End of program
 	return 0;
 }
+
+// Opening banner to welcome users
+void bannerDisplay()
+{
+	printf("\n");
+	printf("FiveDice: A Game Of Luck And Strategy\n");
+}	
