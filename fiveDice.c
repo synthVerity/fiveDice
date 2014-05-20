@@ -4,6 +4,9 @@
 #include <time.h>
 #include <ctype.h>
 
+// Function Definitions
+void bannerDisplay();
+
 // Obvious main is obvious
 int main(void)
 {
@@ -18,6 +21,9 @@ int main(void)
 	int i, j;
 	int dice[5];
 	char input[10], check;
+
+	// Print out the opening banner
+	bannerDisplay();
 
 	// Main game(while) loop
 	while(running)
