@@ -16,3 +16,4 @@ Compliation: Compiled with GCC. Flags used: -Wall -pedantic -Werror -std=gnu99
 
 Usage: Run compiled binary. That simple so far. Need to update this when
 	   program becomes more complicated.
+
