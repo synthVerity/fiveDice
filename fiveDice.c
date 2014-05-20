@@ -83,5 +83,12 @@ int main(void)
 void bannerDisplay()
 {
 	printf("\n");
-	printf("FiveDice: A Game Of Luck And Strategy\n");
+	printf(" ____ _____      ______   ____ ___ ___ ____\n");
+	printf("|  __|_ _\\ \\    / / ___| |  _ \\_ _/ __| ___|\n");
+	printf("| |_  | | \\ \\  / /|  _|  | | | | | |  |  _|\n");
+	printf("|  _| | |  \\ \\/ / | |__  | |_| | | |__| |__\n");
+	printf("|_|  |___|  \\__/  |____| |____/___\\___|____|\n");
+	printf("\n");
+	printf("A Game of Luck and Skill.\n");
+	printf("\n");
 }	
