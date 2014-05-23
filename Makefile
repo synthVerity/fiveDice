@@ -6,3 +6,6 @@ fiveDice.o : fiveDice.c
 
 clean :
 	rm fiveDice *.o
+
+debug :
+	gcc -pg -g fiveDice.c
