@@ -6,6 +6,8 @@
 
 // Function Definitions
 void bannerDisplay();
+void diceRoll(int *rolledDice, int toRoll);
+void printDice(int rolledDice[], int toRoll, int *rollNumber);
 
 // Struct to hold the points of individual players
 struct player
@@ -35,25 +37,12 @@ int main(void)
 	// Main game(while) loop
 	while(running)
 	{
-		// Output the number of times the player has rolled
-		printf("This is roll number %d.\n", rollNumber);
+		// Call dice rolling function
+		diceRoll(rolledDice, toRoll);
+
+		// Call printing function
+		printDice(rolledDice, toRoll, &rollNumber);
 		
-		// First for loop to set the random value of the dice
-		for(i = 0; i < toRoll; i++)
-		{
-			rolledDice[i] = rand() % 6 + 1;
-		}
-
-		// Second for loop to print out the values of each dice,
-		// Then to compare them to the other dice for matches
-		for(i = 0; i < toRoll; i++)
-		{
-			printf("Dice %d: %d\n", i+1, rolledDice[i]);
-		}
-
-		// Increment the number of times player has rolled
-		rollNumber++;
-
 		// Loop to have player withhold dice from next roll
 		while(answer != 0)
 		{
@@ -122,4 +111,36 @@ void bannerDisplay()
 	printf("\n");
 	printf("A Game of Luck and Skill.\n");
 	printf("\n");
-}	
+}
+
+// Function for the dice roll
+void diceRoll(int *rolledDice, int toRoll)
+{
+	// Function variables
+	int i;
+
+	// Actual loop to set values
+	for(i = 0; i < toRoll; i++)
+	{
+		rolledDice[i] = rand() % 6 + 1;
+	}
+}
+
+// Function to print out the values of the dice in the last roll
+void printDice(int rolledDice[], int toRoll, int *rollNumber)
+{
+	// Function variables
+	int i;
+
+	// Print out the number of the roll
+	printf("This is roll number %d.\n", *rollNumber);
+
+	// Actual printing loop
+	for(i = 0; i < toRoll; i++)
+	{
+		printf("Dice %d: %d\n", i+1, rolledDice[i]);
+	}
+
+	// Update the roll number to reflect roll
+	*rollNumber += 1;
+}
