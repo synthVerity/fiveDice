@@ -7,8 +7,8 @@
 // Function Definitions
 void bannerDisplay();
 void diceRoll(int *rolledDice, int toRoll);
-void printDice(int rolledDice[], int toRoll, int *rollNumber);
-void withholdDice(int *rolledDice, int *heldValues, int *numberHeld, int toRoll);
+void printDice(int rolledDice[], int toRoll, int *rollNumber, int heldValues[], int numberHeld);
+int withholdDice(int *rolledDice, int *heldValues, int *numberHeld, int toRoll);
 
 // Struct to hold the points of individual players
 struct player
@@ -42,23 +42,11 @@ int main(void)
 		diceRoll(rolledDice, toRoll);
 
 		// Call printing function
-		printDice(rolledDice, toRoll, &rollNumber);
+		printDice(rolledDice, toRoll, &rollNumber, heldValues, numberHeld);
 
 		// Call the withholding function
-		withholdDice(rolledDice, heldValues, &numberHeld, toRoll);	
+		toRoll = withholdDice(rolledDice, heldValues, &numberHeld, toRoll);	
 
-		// There has to be a better solution than this
-		answer = -1;
-
-		// Set the number allowed to roll
-		// Need a better solution down the road
-		toRoll = 5 - numberHeld;
-
-			// For loop to print out the values of held dice
-		for(i = 0; i < numberHeld; i++)
-		{
-			printf("Held Dice %d: %d\n", i+1, heldValues[i]);
-		}	
 	}
 
 	// End of program
@@ -93,7 +81,7 @@ void diceRoll(int *rolledDice, int toRoll)
 }
 
 // Function to print out the values of the dice in the last roll
-void printDice(int rolledDice[], int toRoll, int *rollNumber)
+void printDice(int rolledDice[], int toRoll, int *rollNumber, int heldValues[], int numberHeld)
 {
 	// Function variables
 	int i;
@@ -101,18 +89,33 @@ void printDice(int rolledDice[], int toRoll, int *rollNumber)
 	// Print out the number of the roll
 	printf("This is roll number %d.\n", *rollNumber);
 
-	// Actual printing loop
+	// Print new line for cleanliness
+	printf("\n");
+
+	// Print out the dice that are held by the player
+	for(i = 0; i < numberHeld; i++)
+	{
+		printf("Held Dice %d: %d\n", i+1, heldValues[i]);
+	}
+
+	// Print new line for cleanliness
+	printf("\n");
+
+	// Print out the dice that were just rolled
 	for(i = 0; i < toRoll; i++)
 	{
 		printf("Dice %d: %d\n", i+1, rolledDice[i]);
 	}
+
+	// Print new line for cleanliness
+	printf("\n");
 
 	// Update the roll number to reflect roll
 	*rollNumber += 1;
 }
 
 // Function to handle the player's choice to withhold dice
-void withholdDice(int *rolledDice, int *heldValues, int *numberHeld, int toRoll)
+int withholdDice(int *rolledDice, int *heldValues, int *numberHeld, int toRoll)
 {
 	// Function variables
 	int answer = -1;
@@ -156,4 +159,10 @@ void withholdDice(int *rolledDice, int *heldValues, int *numberHeld, int toRoll)
 
 		}
 	}
+
+	// Print a new line for cleanliness
+	printf("\n");
+
+	// Return the value to be used by toRoll
+	return 5 - *numberHeld;
 }
