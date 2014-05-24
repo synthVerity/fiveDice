@@ -7,19 +7,26 @@
 // Function Definitions
 void bannerDisplay();
 
+// Struct to hold the points of individual players
+struct player
+{
+	int score;
+};
+
 // Obvious main is obvious
 int main(void)
 {
 	// Seed the random numbers
 	srand(time(NULL));
 
-	// Scoring card template for players
-	
-
 	// Basic variables for the programs use
 	int running = 1;
 	int i, j;
-	int dice[5];
+	int rollNumber = 0;
+	int rolledDice[5], heldValues[5];
+	int numberHeld = 0;
+	int toRoll = 5;
+	int answer;
 	char input[10], check;
 
 	// Print out the opening banner
@@ -29,31 +36,62 @@ int main(void)
 	while(running)
 	{
 		// First for loop to set the random value of the dice
-		for(i = 0; i < 5; i++)
+		for(i = 0; i < toRoll; i++)
 		{
-			dice[i] = rand() % 6 + 1;
+			rolledDice[i] = rand() % 6 + 1;
 		}
 
 		// Second for loop to print out the values of each dice,
 		// Then to compare them to the other dice for matches
-		for(i = 0; i < 5; i++)
+		for(i = 0; i < toRoll; i++)
 		{
-			printf("Dice %d: %d\t", i+1, dice[i]);
-
-			// Nested for loop to compare the values of the dice
-			for(j = 0; j < 5; j++)
-			{
-				// Check to see if the dice match, and that it is not the same dice
-				if(dice[i] == dice[j] && i != j)
-				{
-					printf("Equal to dice %d  ", j+1);
-				}
-			}
-
-			// New line to keep dice seperate
-			printf("\n");
+			printf("Dice %d: %d\n", i+1, rolledDice[i]);
 		}
 
+		// Increment the number of times player has rolled
+		rollNumber++;
+
+		// Loop to have player withhold dice from next roll
+		while(answer != 0)
+		{
+			// Prompt for the dice to withhold
+			printf("Which dice do you want to hold(0 for none): ");
+			fgets(input, sizeof(input), stdin);
+			sscanf(input, "%d", &answer);
+
+			// Weed out unwelcome answers
+			if(answer < 0 || answer > toRoll)
+			{
+				printf("That is not an acceptable value.\n");
+				continue;
+			}
+			// Handle the legitimate cases
+			else if(answer != 0)
+			{
+				// Set the number of dice available for roll to less
+				toRoll--;
+
+				// Confirm value to player and give value to heldValues array
+				printf("Withholding value %d\n", rolledDice[answer-1]);
+				heldValues[numberHeld] = rolledDice[answer-1];
+
+				// Increase the number of values in array
+				numberHeld++;
+			}
+		}
+
+		// Reset the variable to prevent looping
+		// There has to be a better solution than this
+		answer = -1;
+
+			// For loop to print out the values of held dice
+		for(i = 0; i < numberHeld; i++)
+		{
+			printf("Held Dice %d: %d\n", i+1, heldValues[i]);
+		}
+
+
+/*
 		// Ask the player if they want to roll again
 		while(check != 'n' && check != 'y')
 		{
@@ -63,7 +101,7 @@ int main(void)
 			// Parse input to lowercase
 			check = tolower(input[0]);
 		}
-
+*/
 		// React to player input
 		if(check == 'n')
 		{
@@ -71,7 +109,8 @@ int main(void)
 		}
 		else
 		{
-			check = '\0';
+			check = 'y';
+			// check = '\0';
 		}
 	}
 
