@@ -22,7 +22,7 @@ int main(void)
 	// Basic variables for the programs use
 	int running = 1;
 	int i, j;
-	int rollNumber = 0;
+	int rollNumber = 1;
 	int rolledDice[5], heldValues[5];
 	int numberHeld = 0;
 	int toRoll = 5;
@@ -35,6 +35,9 @@ int main(void)
 	// Main game(while) loop
 	while(running)
 	{
+		// Output the number of times the player has rolled
+		printf("This is roll number %d.\n", rollNumber);
+		
 		// First for loop to set the random value of the dice
 		for(i = 0; i < toRoll; i++)
 		{
@@ -68,12 +71,20 @@ int main(void)
 			// Handle the legitimate cases
 			else if(answer != 0)
 			{
-				// Set the number of dice available for roll to less
-				toRoll--;
+				// Check the player for trying to cheat
+				if(rolledDice[answer-1] == 0)
+				{
+					printf("You already witheld that dice.\n");
+					continue;
+				}
 
 				// Confirm value to player and give value to heldValues array
 				printf("Withholding value %d\n", rolledDice[answer-1]);
 				heldValues[numberHeld] = rolledDice[answer-1];
+
+				// Set value of dice withheld to zero
+				// Used to stop player from spamming same dice
+				rolledDice[answer-1] = 0;
 
 				// Increase the number of values in array
 				numberHeld++;
@@ -84,34 +95,15 @@ int main(void)
 		// There has to be a better solution than this
 		answer = -1;
 
+		// Set the number allowed to roll
+		// Need a better solution down the road
+		toRoll = 5 - numberHeld;
+
 			// For loop to print out the values of held dice
 		for(i = 0; i < numberHeld; i++)
 		{
 			printf("Held Dice %d: %d\n", i+1, heldValues[i]);
-		}
-
-
-/*
-		// Ask the player if they want to roll again
-		while(check != 'n' && check != 'y')
-		{
-			printf("\nDo you wish to roll again?[y/N]: ");
-			fgets(input, sizeof(input), stdin);
-
-			// Parse input to lowercase
-			check = tolower(input[0]);
-		}
-*/
-		// React to player input
-		if(check == 'n')
-		{
-			running = 0;
-		}
-		else
-		{
-			check = 'y';
-			// check = '\0';
-		}
+		}	
 	}
 
 	// End of program
