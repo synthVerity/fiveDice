@@ -8,6 +8,7 @@
 void bannerDisplay();
 void diceRoll(int *rolledDice, int toRoll);
 void printDice(int rolledDice[], int toRoll, int *rollNumber);
+void withholdDice(int *rolledDice, int *heldValues, int *numberHeld, int toRoll);
 
 // Struct to hold the points of individual players
 struct player
@@ -42,45 +43,10 @@ int main(void)
 
 		// Call printing function
 		printDice(rolledDice, toRoll, &rollNumber);
-		
-		// Loop to have player withhold dice from next roll
-		while(answer != 0)
-		{
-			// Prompt for the dice to withhold
-			printf("Which dice do you want to hold(0 for none): ");
-			fgets(input, sizeof(input), stdin);
-			sscanf(input, "%d", &answer);
 
-			// Weed out unwelcome answers
-			if(answer < 0 || answer > toRoll)
-			{
-				printf("That is not an acceptable value.\n");
-				continue;
-			}
-			// Handle the legitimate cases
-			else if(answer != 0)
-			{
-				// Check the player for trying to cheat
-				if(rolledDice[answer-1] == 0)
-				{
-					printf("You already witheld that dice.\n");
-					continue;
-				}
+		// Call the withholding function
+		withholdDice(rolledDice, heldValues, &numberHeld, toRoll);	
 
-				// Confirm value to player and give value to heldValues array
-				printf("Withholding value %d\n", rolledDice[answer-1]);
-				heldValues[numberHeld] = rolledDice[answer-1];
-
-				// Set value of dice withheld to zero
-				// Used to stop player from spamming same dice
-				rolledDice[answer-1] = 0;
-
-				// Increase the number of values in array
-				numberHeld++;
-			}
-		}
-
-		// Reset the variable to prevent looping
 		// There has to be a better solution than this
 		answer = -1;
 
@@ -143,4 +109,51 @@ void printDice(int rolledDice[], int toRoll, int *rollNumber)
 
 	// Update the roll number to reflect roll
 	*rollNumber += 1;
+}
+
+// Function to handle the player's choice to withhold dice
+void withholdDice(int *rolledDice, int *heldValues, int *numberHeld, int toRoll)
+{
+	// Function variables
+	int answer = -1;
+	char input[5];
+
+	// Loop until player gets all the dice they want
+	while(answer != 0)
+	{
+		// Prompt the player for the dice and take input
+		printf("Which dice do you want to hold(0 for none): ");
+		fgets(input, sizeof(input), stdin);
+		sscanf(input, "%d", &answer);
+
+		// Weed out the bad input values
+		if(answer < 0 || answer > toRoll)
+		{
+			printf("That is not an acceptable value.\n");
+			continue;
+		}
+		// Handle the legitimate input
+		else if(answer != 0)
+		{
+			// Stop player from spamming same dice
+			if(rolledDice[answer-1] == 0)
+			{
+				printf("You have already withheld that dice.\n");
+				continue;
+			}
+
+			// Print out the value to player
+			printf("Withholding value %d.\n", rolledDice[answer-1]);
+
+			// Take the value over from dice array to values array
+			heldValues[*numberHeld] = rolledDice[answer-1];
+
+			// Remove the dice to prevent player cheating
+			rolledDice[answer-1] = 0;
+
+			// Increment the number held for array
+			*numberHeld += 1;
+
+		}
+	}
 }
