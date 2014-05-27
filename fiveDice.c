@@ -9,6 +9,8 @@ void bannerDisplay();
 void diceRoll(int *rolledDice, int toRoll);
 void printDice(int rolledDice[], int toRoll, int *rollNumber, int heldValues[], int numberHeld);
 int withholdDice(int *rolledDice, int *heldValues, int *numberHeld, int toRoll);
+void arrayShrink(int *array, int size);
+int areIndexLowest(int array[], int size);
 
 // Struct to hold the points of individual players
 struct player
@@ -65,6 +67,9 @@ void bannerDisplay()
 	printf("\n");
 	printf("A Game of Luck and Skill.\n");
 	printf("\n");
+
+	// Obligatory return
+	return;
 }
 
 // Function for the dice roll
@@ -78,6 +83,9 @@ void diceRoll(int *rolledDice, int toRoll)
 	{
 		rolledDice[i] = rand() % 6 + 1;
 	}
+
+	// Obligatory return
+	return;
 }
 
 // Function to print out the values of the dice in the last roll
@@ -112,6 +120,9 @@ void printDice(int rolledDice[], int toRoll, int *rollNumber, int heldValues[], 
 
 	// Update the roll number to reflect roll
 	*rollNumber += 1;
+
+	// Obligatory return
+	return;
 }
 
 // Function to handle the player's choice to withhold dice
@@ -160,9 +171,99 @@ int withholdDice(int *rolledDice, int *heldValues, int *numberHeld, int toRoll)
 		}
 	}
 
+	// Reset answer for the next part
+	answer = -1;
+
+	// Run the same basic process, but to return dice to roll
+	while(answer != 0)
+	{
+		// Promt player for the dice and take input
+		printf("Which dice do you want to unhold(0 for none): ");
+		fgets(input, sizeof(input), stdin);
+		sscanf(input, "%d", &answer);
+
+		// Weed out the bad input values
+		if(answer < 0 || answer > *numberHeld)
+		{
+			printf("That is not an acceptable value.\n");
+			continue;
+		}
+		// Handle the legitamate input
+		else if(answer != 0)
+		{
+			// Stop the player from spamming same dice
+			if(heldValues[answer-1] == 0)
+			{
+				printf("You have already replaced that dice.\n");
+				continue;
+			}
+
+			// Print out the value to the player
+			printf("Replacing value %d.\n", heldValues[answer-1]);
+
+			// Take the value from values array, and add to the dice array
+			heldValues[answer-1] = 0;
+			*numberHeld -= 1;
+		}
+	}
+
+	// Push the values in heldValues to lowest possible index
+	// Passing is possibly convoluted, trying to eliminate magic numbers
+	arrayShrink(heldValues, sizeof(heldValues) / sizeof(heldValues[0]));
+
 	// Print a new line for cleanliness
 	printf("\n");
 
 	// Return the value to be used by toRoll
 	return 5 - *numberHeld;
+}
+
+// Function to make all values in an array be at the lowest point possible
+void arrayShrink(int *array, int size)
+{
+	// Function variables
+	int i;
+	int fractured = areIndexLowest(array, size);
+
+	// Loop to keep function going until job is complete
+	while(fractured)
+	{
+		// Loop to travel through array for empty spaces
+		for(i = size; i > 0; i--)
+		{
+			// Find empty spaces that have values to transfer
+			if(array[i-1] == 0 && array[i] != 0)
+			{
+				// Replace the value of the empty space and set it to zero
+				array[i-1] = array[i];
+				array[i] = 0;
+			}
+		}
+
+		// Check to see if the job is complete
+		fractured = areIndexLowest(array, size);
+	}
+
+	return;
+}
+
+// Function to make sure array is using lowest possible indexes
+int areIndexLowest(int array[], int size)
+{
+	// Function variables
+	int i;
+
+	// Actual loop to do the checking
+	for(i = size; i >= 0; i--)
+	{
+		// Find stray values in higher indexes
+		if(array[i] != 0 && array[i-1] == 0)
+		{
+			// Return value to continue work
+			return 1;
+		}
+	}
+
+	// Return value that work is done
+	return 0;
 }
