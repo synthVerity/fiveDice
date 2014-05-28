@@ -1,16 +1,5 @@
-// Header information and system calls
-#include <stdio.h>
-#include <stdlib.h>
-#include <time.h>
-#include <ctype.h>
-
-// Function Definitions
-void bannerDisplay();
-void diceRoll(int *rolledDice, int toRoll);
-void printDice(int rolledDice[], int toRoll, int *rollNumber, int heldValues[], int numberHeld);
-int withholdDice(int *rolledDice, int *heldValues, int *numberHeld, int toRoll);
-void arrayShrink(int *array, int size);
-int areIndexLowest(int array[], int size);
+// Use the custom header file
+#include "fiveDice.h"
 
 // Struct to hold the points of individual players
 struct player
