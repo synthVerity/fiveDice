@@ -1,11 +1,14 @@
-fiveDice : fiveDice.o
-	gcc -o fiveDice fiveDice.o
+CC=gcc
+CFLAGS=-Wall -Werror -pedantic -std=gnu99
 
-fiveDice.o : fiveDice.c
-	gcc -c fiveDice.c
+fiveDice : fiveDice.o
+	$(CC) -o fiveDice fiveDice.o $(CFLAGS)
+
+fiveDice.o : fiveDice.c fiveDice.h
+	$(CC) -c -Wall fiveDice.c $(CFLAGS)
 
 clean :
 	rm fiveDice *.o
 
 debug :
-	gcc -pg -g fiveDice.c
+	$(CC) -pg -g fiveDice.c $(CFLAGS)
