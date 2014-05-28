@@ -23,7 +23,7 @@ struct player
 	int score;
 
 	// Hold the individual point amounts here
-	struct scorecard
+	struct
 	{
 		int ones;
 		int twos;
@@ -39,7 +39,7 @@ struct player
 		int largeStraight;
 		int fiveOfKind;
 		int chance;
-	};
+	} scorecard;
 };
 
 // End the header file and if
