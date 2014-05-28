@@ -16,5 +16,31 @@ int withholdDice(int *rolledDice, int *heldValues, int *numberHeld, int toRoll);
 void arrayShrink(int *array, int size);
 int areIndexLowest(int array[], int size);
 
+// Struct for player information
+struct player
+{
+	// Hold player's score here
+	int score;
+
+	// Hold the individual point amounts here
+	struct scorecard
+	{
+		int ones;
+		int twos;
+		int threes;
+		int fours;
+		int fives;
+		int sixes;
+		int topBonus;
+		int threeOfKind;
+		int fourOfKind;
+		int fullHouse;
+		int smallStraight;
+		int largeStraight;
+		int fiveOfKind;
+		int chance;
+	};
+};
+
 // End the header file and if
 #endif

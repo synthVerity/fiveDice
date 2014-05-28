@@ -1,12 +1,6 @@
 // Use the custom header file
 #include "fiveDice.h"
 
-// Struct to hold the points of individual players
-struct player
-{
-	int score;
-};
-
 // Obvious main is obvious
 int main(void)
 {
