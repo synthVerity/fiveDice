@@ -5,7 +5,7 @@ fiveDice : fiveDice.o
 	$(CC) -o fiveDice fiveDice.o $(CFLAGS)
 
 fiveDice.o : fiveDice.c fiveDice.h
-	$(CC) -c -Wall fiveDice.c $(CFLAGS)
+	$(CC) -c fiveDice.c $(CFLAGS)
 
 clean :
 	rm fiveDice *.o

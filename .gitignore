@@ -1,5 +1,6 @@
-# Ignore the binary, debug files, linking files, and the vim swap file
+# Ignore the binary, debug files, linking files, and the vim swap files
 fiveDice
 gmon.out
 fiveDice.o
 .fiveDice.c.swp
+.fiveDice.h.swp
