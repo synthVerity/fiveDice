@@ -9,13 +9,10 @@ int main(void)
 
 	// Basic variables for the programs use
 	int running = 1;
-	int i, j;
 	int rollNumber = 1;
 	int rolledDice[5], heldValues[5];
 	int numberHeld = 0;
 	int toRoll = 5;
-	int answer;
-	char input[10], check;
 
 	// Print out the opening banner
 	bannerDisplay();
@@ -161,7 +158,7 @@ int withholdDice(int *rolledDice, int *heldValues, int *numberHeld, int toRoll)
 	while(answer != 0)
 	{
 		// Promt player for the dice and take input
-		printf("Which dice do you want to unhold(0 for none): ");
+		printf("Which dice do you want to replace(0 for none): ");
 		fgets(input, sizeof(input), stdin);
 		sscanf(input, "%d", &answer);
 
@@ -192,7 +189,7 @@ int withholdDice(int *rolledDice, int *heldValues, int *numberHeld, int toRoll)
 
 	// Push the values in heldValues to lowest possible index
 	// Passing is possibly convoluted, trying to eliminate magic numbers
-	arrayShrink(heldValues, sizeof(heldValues) / sizeof(heldValues[0]));
+	arrayShrink(heldValues, 5);
 
 	// Print a new line for cleanliness
 	printf("\n");
