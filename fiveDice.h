@@ -42,5 +42,8 @@ struct player
 	} scorecard;
 };
 
+// Setting up a constant for the number of dice being rolled
+#define DICENUMBER 5
+
 // End the header file and if
 #endif

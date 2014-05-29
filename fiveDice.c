@@ -10,9 +10,9 @@ int main(void)
 	// Basic variables for the programs use
 	int running = 1;
 	int rollNumber = 1;
-	int rolledDice[5], heldValues[5];
+	int rolledDice[DICENUMBER], heldValues[DICENUMBER];
 	int numberHeld = 0;
-	int toRoll = 5;
+	int toRoll = DICENUMBER;
 
 	// Print out the opening banner
 	bannerDisplay();
@@ -151,8 +151,9 @@ int withholdDice(int *rolledDice, int *heldValues, int *numberHeld, int toRoll)
 		}
 	}
 
-	// Reset answer for the next part
+	// Reset answer for the next part and new line for cleanliness
 	answer = -1;
+	printf("\n");
 
 	// Run the same basic process, but to return dice to roll
 	while(answer != 0)
@@ -189,13 +190,13 @@ int withholdDice(int *rolledDice, int *heldValues, int *numberHeld, int toRoll)
 
 	// Push the values in heldValues to lowest possible index
 	// Passing is possibly convoluted, trying to eliminate magic numbers
-	arrayShrink(heldValues, 5);
+	arrayShrink(heldValues, DICENUMBER);
 
 	// Print a new line for cleanliness
 	printf("\n");
 
 	// Return the value to be used by toRoll
-	return 5 - *numberHeld;
+	return DICENUMBER - *numberHeld;
 }
 
 // Function to make all values in an array be at the lowest point possible
