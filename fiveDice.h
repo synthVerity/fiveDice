@@ -7,6 +7,7 @@
 #include <stdlib.h>
 #include <time.h>
 #include <ctype.h>
+#include "arrayFunc.h"
 
 // Function definitions
 void bannerDisplay();
