@@ -2,5 +2,8 @@
 fiveDice
 gmon.out
 fiveDice.o
+arrayFunc.o
 .fiveDice.c.swp
 .fiveDice.h.swp
+.arrayFunc.c.swp
+.arrayFunc.h.swp
