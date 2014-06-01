@@ -8,6 +8,8 @@ void arrayShrink(int *array, int size)
 	int i;
 	int fractured = areIndexLowest(array, size);
 
+	printf("%d\n", size);
+
 	// Loop to keep function going until job is complete
 	while(fractured)
 	{

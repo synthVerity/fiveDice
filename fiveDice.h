@@ -12,7 +12,7 @@
 // Function definitions
 void bannerDisplay();
 void diceRoll(int *rolledDice, int toRoll);
-void printDice(int rolledDice[], int toRoll, int *rollNumber, int heldValues[], int numberHeld);
+void printDice(int rolledDice[], int toRoll, int heldValues[], int numberHeld);
 int withholdDice(int *rolledDice, int *heldValues, int *numberHeld, int toRoll);
 void arrayShrink(int *array, int size);
 int areIndexLowest(int array[], int size);
