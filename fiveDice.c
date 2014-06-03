@@ -106,6 +106,7 @@ int withholdDice(int *rolledDice, int *heldValues, int *numberHeld, int toRoll)
 	// Function variables
 	int answer = -1;
 	char input[5];
+	int replace = 0;
 
 	// Loop until player gets all the dice they want
 	while(answer != 0)
@@ -148,8 +149,8 @@ int withholdDice(int *rolledDice, int *heldValues, int *numberHeld, int toRoll)
 
 	// Reset answer for the next part and new line for cleanliness
 	answer = -1;
-	//printf("\n");
-	//printDice(rolledDice, 0, heldValues, *numberHeld);
+	printf("\n");
+	printDice(rolledDice, 0, heldValues, *numberHeld);
 
 	// Run the same basic process, but to return dice to roll
 	while(answer != 0)
@@ -180,16 +181,25 @@ int withholdDice(int *rolledDice, int *heldValues, int *numberHeld, int toRoll)
 
 			// Take the value from values array, and add to the dice array
 			heldValues[answer-1] = 0;
-			*numberHeld -= 1;
+			replace += 1;
 		}
+	}
+
+	// Set the numberHeld variable to it's proper value
+	*numberHeld -= replace;
+
+	// Print a new line for cleanliness
+	printf("\n");
+
+	// Don't do the arrayShrink if nothing has changed
+	if(*numberHeld == 0)
+	{
+		return DICENUMBER;
 	}
 
 	// Push the values in heldValues to lowest possible index
 	// Passing is possibly convoluted, trying to eliminate magic numbers
 	arrayShrink(heldValues, DICENUMBER);
-
-	// Print a new line for cleanliness
-	printf("\n");
 
 	// Return the value to be used by toRoll
 	return DICENUMBER - *numberHeld;
