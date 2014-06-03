@@ -37,7 +37,7 @@ int areIndexLowest(int array[], int size)
 	int i;
 
 	// Actual loop to do the checking
-	for(i = size; i >= 0; i--)
+	for(i = size; i > 0; i--)
 	{
 		// Find stray values in higher indexes
 		if(array[i] != 0 && array[i-1] == 0)

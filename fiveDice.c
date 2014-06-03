@@ -191,12 +191,6 @@ int withholdDice(int *rolledDice, int *heldValues, int *numberHeld, int toRoll)
 	// Print a new line for cleanliness
 	printf("\n");
 
-	// Don't do the arrayShrink if nothing has changed
-	if(*numberHeld == 0)
-	{
-		return DICENUMBER;
-	}
-
 	// Push the values in heldValues to lowest possible index
 	// Passing is possibly convoluted, trying to eliminate magic numbers
 	arrayShrink(heldValues, DICENUMBER);
