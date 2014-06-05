@@ -198,3 +198,12 @@ int withholdDice(int *rolledDice, int *heldValues, int *numberHeld, int toRoll)
 	// Return the value to be used by toRoll
 	return DICENUMBER - *numberHeld;
 }
+
+// Function to give program command line like input
+void handleInput()
+{
+	// Function variables
+	char input[10];
+
+	return;
+}

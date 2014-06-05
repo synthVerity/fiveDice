@@ -16,6 +16,7 @@ void printDice(int rolledDice[], int toRoll, int heldValues[], int numberHeld);
 int withholdDice(int *rolledDice, int *heldValues, int *numberHeld, int toRoll);
 void arrayShrink(int *array, int size);
 int areIndexLowest(int array[], int size);
+void handleInput();
 
 // Struct for player information
 struct player
