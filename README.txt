@@ -1,16 +1,11 @@
-*****************************************************************************
-*																			*
-*  Five Dice - A bad terminal clone of Yahtzee								*
-*		Created by: Austin Karn(@synthverity)								*
-*																			*
-*****************************************************************************
+	Five Dice - A bad terminal clone of Yahtzee
+		Created by: Austin Karn(@synthverity)
 
 Why I made this: I made this for my own selfish practice. This is not meant
 				 to be taken as a serious project of any sort(unless I change
 				 my mind).
 
-License: None as of yet. I need to do research on them and figure it out from
-		 there.
+License: Project uses GNU GPLv2 License. Full license in LICENSE
 
 Installation: After cloning the directory into wherever you want, run 'make'.
 
