@@ -7,16 +7,25 @@ int main(void)
 	// Seed the random numbers
 	srand(time(NULL));
 
-	// Basic variables for the programs use
+	// Print out the opening banner
+	bannerDisplay();
+
+	// Run the main loop of the program
+	gameLoop();
+
+	// End of program
+	return 0;
+}
+
+void gameLoop()
+{
+	// Function variables
 	int running = 1;
 	int rolledDice[DICENUMBER], heldValues[DICENUMBER];
 	int numberHeld = 0;
 	int toRoll = DICENUMBER;
 
-	// Print out the opening banner
-	bannerDisplay();
-
-	// Main game(while) loop
+	// Main loop for entire game
 	while(running)
 	{
 		// Call dice rolling function
@@ -26,12 +35,11 @@ int main(void)
 		printDice(rolledDice, toRoll, heldValues, numberHeld);
 
 		// Call the withholding function
-		toRoll = withholdDice(rolledDice, heldValues, &numberHeld, toRoll);	
-
+		toRoll = withholdDice(rolledDice, heldValues, &numberHeld, toRoll);
+		toRoll = replaceDice(rolledDice, heldValues, &numberHeld, toRoll);
 	}
 
-	// End of program
-	return 0;
+	return;
 }
 
 // Opening banner to welcome users
@@ -106,7 +114,6 @@ int withholdDice(int *rolledDice, int *heldValues, int *numberHeld, int toRoll)
 	// Function variables
 	int answer = -1;
 	char input[5];
-	int replace = 0;
 
 	// Loop until player gets all the dice they want
 	while(answer != 0)
@@ -147,9 +154,21 @@ int withholdDice(int *rolledDice, int *heldValues, int *numberHeld, int toRoll)
 		}
 	}
 
-	// Reset answer for the next part and new line for cleanliness
-	answer = -1;
+	// Print new line for cleanliness
 	printf("\n");
+
+	// Return the value to be used by toRoll
+	return DICENUMBER - *numberHeld;
+}
+
+int replaceDice(int *rolledDice, int *heldValues, int *numberHeld, int toRoll)
+{
+	// Function variables 
+	int answer = -1;
+	char input[5];
+	int replace = 0;
+
+	// Use the printDice function to only show held dice
 	printDice(rolledDice, 0, heldValues, *numberHeld);
 
 	// Run the same basic process, but to return dice to roll
@@ -195,15 +214,11 @@ int withholdDice(int *rolledDice, int *heldValues, int *numberHeld, int toRoll)
 	// Passing is possibly convoluted, trying to eliminate magic numbers
 	arrayShrink(heldValues, DICENUMBER);
 
-	// Return the value to be used by toRoll
+	// Return the amount of dice allowed to roll
 	return DICENUMBER - *numberHeld;
 }
 
-// Function to give program command line like input
 void handleInput()
 {
-	// Function variables
-	char input[10];
-
 	return;
 }
