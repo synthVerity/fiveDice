@@ -12,13 +12,14 @@
 // Function definitions
 void gameLoop();
 void bannerDisplay();
+void helpDisplay();
 void diceRoll(int *rolledDice, int toRoll);
 void printDice(int rolledDice[], int toRoll, int heldValues[], int numberHeld);
 int withholdDice(int *rolledDice, int *heldValues, int *numberHeld, int toRoll);
 int replaceDice(int *rolledDice, int *heldValues, int *numberHeld, int toRoll);
 void arrayShrink(int *array, int size);
 int areIndexLowest(int array[], int size);
-void handleInput();
+char handleInput();
 
 // Struct for player information
 struct player

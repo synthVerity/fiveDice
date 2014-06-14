@@ -24,19 +24,55 @@ void gameLoop()
 	int rolledDice[DICENUMBER], heldValues[DICENUMBER];
 	int numberHeld = 0;
 	int toRoll = DICENUMBER;
+	char choice;
+
+	// Set up the dice and the player
+	helpDisplay();
+	diceRoll(rolledDice, toRoll);
+	printDice(rolledDice, toRoll, heldValues, numberHeld);
 
 	// Main loop for entire game
 	while(running)
 	{
-		// Call dice rolling function
-		diceRoll(rolledDice, toRoll);
+		// Call the input function to get player option
+		choice = handleInput();
 
-		// Call printing function
-		printDice(rolledDice, toRoll, heldValues, numberHeld);
+		// Switch statement to handle player choice
+		switch(choice)
+		{
+			// Call the help display function
+			case 'h':
+				helpDisplay();
+				break;
 
-		// Call the withholding function
-		toRoll = withholdDice(rolledDice, heldValues, &numberHeld, toRoll);
-		toRoll = replaceDice(rolledDice, heldValues, &numberHeld, toRoll);
+			// Call dice rolling function
+			case 'd':
+				diceRoll(rolledDice, toRoll);
+
+			// Call printing function
+			case 'p':
+				printDice(rolledDice, toRoll, heldValues, numberHeld);
+				break;
+
+			// Call the withholding function
+			case 'w':
+				toRoll = withholdDice(rolledDice, heldValues, &numberHeld, toRoll);
+				break;
+
+			// Call the replace function
+			case 'r':
+				toRoll = replaceDice(rolledDice, heldValues, &numberHeld, toRoll);
+				break;
+
+			// Quit the program
+			case 'q':
+				running = 0;
+				break;
+
+			// Discard all other cases
+			default:
+				break;
+		}
 	}
 
 	return;
@@ -54,6 +90,19 @@ void bannerDisplay()
 	printf("\n");
 	printf("A Game of Luck and Skill.\n");
 	printf("\n");
+
+	// Obligatory return
+	return;
+}
+
+// Function to print out the help option to players
+void helpDisplay()
+{
+	printf("h - This help page\n");
+	printf("d - Roll the dice\n");
+	printf("p - Print the dice on the screen\n");
+	printf("w - Withhold dice from the table to your hand\n");
+	printf("r - Return dice from your hand to the cup\n");
 
 	// Obligatory return
 	return;
@@ -81,10 +130,16 @@ void printDice(int rolledDice[], int toRoll, int heldValues[], int numberHeld)
 	// Function variables
 	int i;
 
-	// Print out the dice that are held by the player
-	for(i = 0; i < numberHeld; i++)
+	if(numberHeld > 0)
 	{
-		printf("Held Dice %d: %d\n", i+1, heldValues[i]);
+		// Print out new line for cleanliness
+		printf("\n");
+
+		// Print out the dice that are held by the player
+		for(i = 0; i < numberHeld; i++)
+		{
+			printf("Held Dice %d: %d\n", i+1, heldValues[i]);
+		}
 	}
 
 	// Print new line for cleanliness
@@ -114,6 +169,9 @@ int withholdDice(int *rolledDice, int *heldValues, int *numberHeld, int toRoll)
 	// Function variables
 	int answer = -1;
 	char input[5];
+
+	// Print out new line for cleanliness
+	printf("\n");
 
 	// Loop until player gets all the dice they want
 	while(answer != 0)
@@ -156,6 +214,9 @@ int withholdDice(int *rolledDice, int *heldValues, int *numberHeld, int toRoll)
 
 	// Print new line for cleanliness
 	printf("\n");
+
+	// Pad down array values for printing function
+	arrayShrink(rolledDice, DICENUMBER);
 
 	// Return the value to be used by toRoll
 	return DICENUMBER - *numberHeld;
@@ -211,14 +272,23 @@ int replaceDice(int *rolledDice, int *heldValues, int *numberHeld, int toRoll)
 	printf("\n");
 
 	// Push the values in heldValues to lowest possible index
-	// Passing is possibly convoluted, trying to eliminate magic numbers
 	arrayShrink(heldValues, DICENUMBER);
 
 	// Return the amount of dice allowed to roll
 	return DICENUMBER - *numberHeld;
 }
 
-void handleInput()
+char handleInput()
 {
-	return;
+	// Function variables
+	char input[5];
+	char answer;
+
+	// Take input from the player
+	printf(":");
+	fgets(input, sizeof(input), stdin);
+	answer = tolower(input[0]);
+
+	// Return the value wanted
+	return answer;
 }
