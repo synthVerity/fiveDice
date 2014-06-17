@@ -17,9 +17,13 @@ int main(void)
 	return 0;
 }
 
+// Bottleneck function for the rest of the program
+// Could put all of this in main, but I feel this is better for organization
 void gameLoop()
 {
-	// Function variables
+	/* Program variables
+	 * These are going to be prominent throughout, instead of one time use 
+	 * Which are prominent in the other functions */
 	int running = 1;
 	int rolledDice[DICENUMBER], heldValues[DICENUMBER];
 	int numberHeld = 0;
