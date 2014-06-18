@@ -172,7 +172,7 @@ int withholdDice(int *rolledDice, int *heldValues, int *numberHeld, int toRoll)
 {
 	// Function variables
 	int answer = -1;
-	char input[5];
+	char input[1];
 
 	// Print out new line for cleanliness
 	printf("\n");
@@ -230,7 +230,7 @@ int replaceDice(int *rolledDice, int *heldValues, int *numberHeld, int toRoll)
 {
 	// Function variables 
 	int answer = -1;
-	char input[5];
+	char input[1];
 	int replace = 0;
 
 	// Use the printDice function to only show held dice
@@ -285,7 +285,7 @@ int replaceDice(int *rolledDice, int *heldValues, int *numberHeld, int toRoll)
 char handleInput()
 {
 	// Function variables
-	char input[5];
+	char input[1];
 	char answer;
 
 	// Take input from the player
