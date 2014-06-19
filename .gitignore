@@ -1,9 +1,5 @@
 # Ignore the binary, debug files, linking files, and the vim swap files
-fiveDice
+fivedice
 gmon.out
-fiveDice.o
-arrayFunc.o
-.fiveDice.c.swp
-.fiveDice.h.swp
-.arrayFunc.c.swp
-.arrayFunc.h.swp
+*.o
+*.swp
