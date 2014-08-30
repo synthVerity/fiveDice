@@ -4,14 +4,20 @@
 // Obvious main is obvious
 int main(void)
 {
+	// Variable for number of players
+	int players;
+
 	// Seed the random numbers
 	srand(time(NULL));
+
+	// Set up the number of players
+	players = gameSetup();
 
 	// Print out the opening banner
 	bannerDisplay();
 
 	// Run the main loop of the program
-	gameLoop();
+	gameLoop(players);
 
 	// End of program
 	return 0;
@@ -19,21 +25,23 @@ int main(void)
 
 // Bottleneck function for the rest of the program
 // Could put all of this in main, but I feel this is better for organization
-void gameLoop()
+void gameLoop(int players)
 {
 	/* Program variables
 	 * These are going to be prominent throughout, instead of one time use 
-	 * Which are prominent in the other functions */
+	 * Which are used in the other functions */
 	int running = 1;
 	int rolledDice[DICENUMBER], heldValues[DICENUMBER];
 	int numberHeld = 0;
 	int toRoll = DICENUMBER;
+	int curPlayer = 1, turn = 1;
 	char choice;
 
 	// Set up the dice and the player
 	helpDisplay();
 	diceRoll(rolledDice, toRoll);
 	printDice(rolledDice, toRoll, heldValues, numberHeld);
+	whosTurn(players, curPlayer, turn);
 
 	// Main loop for entire game
 	while(running)
@@ -50,12 +58,29 @@ void gameLoop()
 				break;
 
 			// Call dice rolling function
-			case 'd':
+			case 'r':
 				diceRoll(rolledDice, toRoll);
+				if(turn < 3)
+				{
+					turn++;
+				}
+				else
+				{
+					turn = 1;
+					if(curPlayer < players)
+					{
+						curPlayer++;
+					}
+					else
+					{
+						curPlayer = 1;
+					}
+				}
 
 			// Call printing function
 			case 'p':
 				printDice(rolledDice, toRoll, heldValues, numberHeld);
+				whosTurn(players, curPlayer, turn);
 				break;
 
 			// Call the withholding function
@@ -64,7 +89,7 @@ void gameLoop()
 				break;
 
 			// Call the replace function
-			case 'r':
+			case 'd':
 				toRoll = replaceDice(rolledDice, heldValues, &numberHeld, toRoll);
 				break;
 
@@ -81,6 +106,26 @@ void gameLoop()
 
 	return;
 }
+
+// Function to set up the game from the beginning
+int gameSetup()
+{
+	// Function variables
+	int answer = -1;
+	char input[5];
+
+	while(answer < 1 || answer > 9)
+	{
+		// Ask how many players there will be
+		printf("How many players will be participating?: ");
+		fgets(input, sizeof(input), stdin);
+		sscanf(input, "%d", &answer);
+	}
+
+	// Return the amount of players
+	return answer;
+}
+
 
 // Opening banner to welcome users
 void bannerDisplay()
@@ -103,14 +148,25 @@ void bannerDisplay()
 void helpDisplay()
 {
 	printf("h - This help page\n");
-	printf("d - Roll the dice\n");
+	printf("r - Roll the dice\n");
 	printf("p - Print the dice on the screen\n");
 	printf("w - Withhold dice from the table to your hand\n");
-	printf("r - Return dice from your hand to the cup\n");
+	printf("d - Return dice from your hand to the cup\n");
 
 	// Obligatory return
 	return;
 }
+
+// Function to print out who's turn it is
+void whosTurn(int players, int curPlayer, int turn)
+{
+	// Print out the current player and turn
+	printf("It is player %d's turn number %d.\n", curPlayer, turn);
+
+	// End the function
+	return;
+}
+
 
 // Function for the dice roll
 void diceRoll(int *rolledDice, int toRoll)
@@ -123,6 +179,9 @@ void diceRoll(int *rolledDice, int toRoll)
 	{
 		rolledDice[i] = rand() % 6 + 1;
 	}
+
+	// Print out who's turn it is
+	
 
 	// Obligatory return
 	return;

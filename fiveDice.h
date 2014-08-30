@@ -10,9 +10,11 @@
 #include "arrayFunc.h"
 
 // Function definitions
-void gameLoop();
+void gameLoop(int players);
+int gameSetup();
 void bannerDisplay();
 void helpDisplay();
+void whosTurn(int players, int curPlayer, int turn);
 void diceRoll(int *rolledDice, int toRoll);
 void printDice(int rolledDice[], int toRoll, int heldValues[], int numberHeld);
 int withholdDice(int *rolledDice, int *heldValues, int *numberHeld, int toRoll);
