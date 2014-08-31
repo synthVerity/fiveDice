@@ -9,6 +9,27 @@
 #include <ctype.h>
 #include "arrayFunc.h"
 
+// Struct for player information
+typedef struct
+{
+	// Hold player's score here
+	int score;
+	int ones;
+	int twos;
+	int threes;
+	int fours;
+	int fives;
+	int sixes;
+	int topBonus;
+	int threeOfKind;
+	int fourOfKind;
+	int fullHouse;
+	int smallStraight;
+	int largeStraight;
+	int fiveOfKind;
+	int chance;
+} Scorecard;
+
 // Function definitions
 void gameLoop(int players);
 int gameSetup();
@@ -19,35 +40,8 @@ void diceRoll(int *rolledDice, int toRoll);
 void printDice(int rolledDice[], int toRoll, int heldValues[], int numberHeld);
 int withholdDice(int *rolledDice, int *heldValues, int *numberHeld, int toRoll);
 int replaceDice(int *rolledDice, int *heldValues, int *numberHeld, int toRoll);
-void arrayShrink(int *array, int size);
-int areIndexLowest(int array[], int size);
+void cashOut(Scorecard *scorecard, int curPlayer);
 char handleInput();
-
-// Struct for player information
-struct player
-{
-	// Hold player's score here
-	int score;
-
-	// Hold the individual point amounts here
-	struct
-	{
-		int ones;
-		int twos;
-		int threes;
-		int fours;
-		int fives;
-		int sixes;
-		int topBonus;
-		int threeOfKind;
-		int fourOfKind;
-		int fullHouse;
-		int smallStraight;
-		int largeStraight;
-		int fiveOfKind;
-		int chance;
-	} scorecard;
-};
 
 // Setting up a constant for the number of dice being rolled
 #define DICENUMBER 5

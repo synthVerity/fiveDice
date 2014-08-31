@@ -37,6 +37,9 @@ void gameLoop(int players)
 	int curPlayer = 1, turn = 1;
 	char choice;
 
+	// Take structs from header file for scorecards
+	Scorecard scorecards[players];
+
 	// Set up the dice and the player
 	helpDisplay();
 	diceRoll(rolledDice, toRoll);
@@ -59,7 +62,7 @@ void gameLoop(int players)
 
 			// Call dice rolling function
 			case 'r':
-				diceRoll(rolledDice, toRoll);
+				// Set the values for turn and current player
 				if(turn < 3)
 				{
 					turn++;
@@ -67,6 +70,8 @@ void gameLoop(int players)
 				else
 				{
 					turn = 1;
+					toRoll = DICENUMBER;
+					numberHeld = 0;
 					if(curPlayer < players)
 					{
 						curPlayer++;
@@ -76,6 +81,9 @@ void gameLoop(int players)
 						curPlayer = 1;
 					}
 				}
+
+				// Roll the dice
+				diceRoll(rolledDice, toRoll);
 
 			// Call printing function
 			case 'p':
@@ -91,6 +99,10 @@ void gameLoop(int players)
 			// Call the replace function
 			case 'd':
 				toRoll = replaceDice(rolledDice, heldValues, &numberHeld, toRoll);
+				break;
+
+			case 'c':
+				cashOut(scorecards, curPlayer);
 				break;
 
 			// Quit the program
@@ -152,6 +164,8 @@ void helpDisplay()
 	printf("p - Print the dice on the screen\n");
 	printf("w - Withhold dice from the table to your hand\n");
 	printf("d - Return dice from your hand to the cup\n");
+	printf("c - Cash out points onto your scorecard\n");
+	printf("q - Quits the game\n");
 
 	// Obligatory return
 	return;
@@ -341,6 +355,16 @@ int replaceDice(int *rolledDice, int *heldValues, int *numberHeld, int toRoll)
 	return DICENUMBER - *numberHeld;
 }
 
+// Function to apply player points to scorecard
+void cashOut(Scorecard *scorecard, int curPlayer)
+{
+	scorecard[curPlayer].score = 0;
+	printf("%d\n", scorecard[curPlayer].score);
+
+	return;
+}
+
+// Function for handling main game input
 char handleInput()
 {
 	// Function variables
